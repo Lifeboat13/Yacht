@@ -1,8 +1,8 @@
 /**
  * <h1>Yacht</h1>
  * <p>
- * A variant on the traditional game that spawned Yatzee. The rules of this
- * version are closer to those of Yatzee than the original game of Yacht.
+ * A variant on the traditional game that spawned Yahtzee. The rules of this
+ * version are closer to those of Yahtzee than the original game of Yacht.
  * <p>
  * This is a one-player game, and can be played solitaire or two-player against
  * a computer opponent. The object of the two-player version is to beat the
@@ -26,7 +26,7 @@
  * and a value from -258 (0 points) to -1 (257 points) for games that fall short
  * of the minimum.
  * <p>
- * @version Alpha 1
+ * @version Alpha 2
  * @author PCGuyIV
  * @copyright Copyright (C) 2014 - PCGuyIV
  * @license GNU General Public License, Version 3 (GPLv3)

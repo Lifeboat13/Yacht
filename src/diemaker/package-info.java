@@ -2,7 +2,7 @@
  * Used to create dice with any number of faces. By default, it creates six-
  * sided dice.
  * <p>
- * @version Alpha 1
+ * @version Alpha 2
  * @author PCGuyIV
  * @copyright Copyright (C) 2014 - PCGuyIV
  * @license GNU General Public License, Version 3 (GPLv3)

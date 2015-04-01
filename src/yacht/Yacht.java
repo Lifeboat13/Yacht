@@ -35,7 +35,7 @@ import javax.swing.border.LineBorder;
  * <p>
  * Creates the main game window.
  * <p>
- * @version Alpha 1
+ * @version Alpha 2
  * @author PCGuyIV
  * @copyright Copyright (C) 2014 - PCGuyIV
  * @license GNU General Public License, Version 3 (GPLv3)
@@ -223,6 +223,8 @@ public class Yacht {
 				lowerScoreValue[3][i].setEnabled(false);
 			}
 		}
+
+		resetScoreButtons();
 	}
 
 	/**
@@ -997,6 +999,8 @@ public class Yacht {
 		} else {
 			scoreHeader[4].setText("Bot won.");
 		}
+
+		JOptionPane.showMessageDialog(frame.getRootPane(), "<html><center><h3>Final Result</h3></center><center><h1>" + scoreHeader[4].getText() + "</h1></center>", "Game Over", JOptionPane.PLAIN_MESSAGE);
 
 	}
 }
