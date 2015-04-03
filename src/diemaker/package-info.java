@@ -20,5 +20,12 @@
  * <p>
  * You should have received a copy of the GNU General Public License along with
  * Yacht.  If not, see {@link http://www.gnu.org/licenses/}.
+ *
+ * @important This package may be used outside of the game, Yacht, under the
+ * following conditions:
+ * <ul><li>The software it is to be used in is licensed under version 3 (or
+ * later) of the GNU General Public License.</li>
+ * <li>Notation of the source of this package (Such as the bulk of this header)
+ * remains present in the package.</li></ul>
  */
 package diemaker;

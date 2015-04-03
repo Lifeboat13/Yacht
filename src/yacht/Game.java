@@ -27,8 +27,8 @@ public class Game {
 
 	private static final int MAX_ROLLS = 3;
 
-	private static boolean threeOfAKind, fourOfAKind, fullHouse;
-	private static boolean smStraight,   lgStraight,  yacht;
+	private static boolean pair,   threeOfAKind, fourOfAKind;
+	private static boolean fullHouse, smStraight,   lgStraight,   yacht;
 
 	private static int acesVal,  twosVal,  threesVal;
 	private static int foursVal, fivesVal, sixesVal;
@@ -36,11 +36,11 @@ public class Game {
 	private static int ssVal,    lsVal,    yachtVal;
 	private static int chanceVal;
 
-	public static void evaluateRoll() {
-		int[] valCount = new int[DICE.getSides()];
-		int[] diceVals = DICE.getResults();
+	private static int[] valCount = new int[DICE.getSides()];
+	private static int[] diceVals = DICE.getResults();
 
-		boolean hasPair = false;
+	public static void evaluateRoll() {
+		pair = false;
 
 		threeOfAKind = fourOfAKind = fullHouse = yacht = false;
 		smStraight   = lgStraight  = true;
@@ -65,7 +65,7 @@ public class Game {
 
 		for (int i = 0; i < DICE.getSides(); i++) {
 			if (valCount[i] == 2 || valCount[i] == 5) {
-				hasPair = true;
+				pair = true;
 			}
 
 			if (valCount[i] >= 3) {
@@ -84,7 +84,7 @@ public class Game {
 			}
 		}
 
-		if (hasPair && threeOfAKind) {
+		if (pair && threeOfAKind) {
 			fullHouse = true;
 			fhVal     = Score.getFullHouseValue();
 		} else {
@@ -117,13 +117,13 @@ public class Game {
 				}
 			}
 
-			if (zeroCount > 1 || pairCount > 1 || !lgStraight) {
+			if (zeroCount > 1 || pairCount > 0 || !lgStraight) {
 				lsVal = 0;
 			} else {
 				lsVal = Score.getLgStraightValue();
 			}
 
-			if (zeroCount > 2 || pairCount > 2 || !smStraight) {
+			if (zeroCount > 2 || pairCount > 1 || !smStraight) {
 				ssVal = 0;
 			} else {
 				ssVal = Score.getSmStraightValue();
@@ -133,6 +133,10 @@ public class Game {
 
 	public static int getMaxRolls() {
 		return MAX_ROLLS;
+	}
+
+	public static int[] getValCount() {
+		return valCount;
 	}
 
 	public static int getAcesVal() {
@@ -161,6 +165,10 @@ public class Game {
 
 	public static int getChanceVal() {
 		return chanceVal;
+	}
+
+	public static boolean hasPair() {
+		return pair;
 	}
 
 	public static boolean hasThreeOfAKind() {

@@ -17,6 +17,12 @@ package diemaker;
 
 import java.util.Random;
 
+/**
+ * Creates an object used to simulate a single die.
+ *
+ * @version Alpha 2
+ * @author PCGuyIV
+ */
 public class DieMaker {
 
 	private static final int DEFAULT_SIDES     = 6;

@@ -121,6 +121,8 @@ public class Yacht {
 		"Sm. Straight", "Lg. Straight", "Yacht", "Chance"
 	};
 
+	public static Yacht window;
+
 	/**
 	 * Launch the application.
 	 */
@@ -140,7 +142,7 @@ public class Yacht {
 			@Override
 			public void run() {
 				try {
-					Yacht window = new Yacht();
+					window = new Yacht();
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -785,6 +787,7 @@ public class Yacht {
 		rollCount = Game.getMaxRolls();
 		rollButton.setEnabled(true);
 		rollButton.setText(Integer.toString(rollCount) + " Rolls");
+
 	}
 
 	private void nextTurn() {
@@ -815,7 +818,10 @@ public class Yacht {
 			showGameResults();
 		} else {
 			resetRollButton();
+			Bot.repaintButtons();
+			checkForBot();
 		}
+
 	}
 
 	private void resetScoreButtons() {
@@ -1001,6 +1007,84 @@ public class Yacht {
 		}
 
 		JOptionPane.showMessageDialog(frame.getRootPane(), "<html><center><h3>Final Result</h3></center><center><h1>" + scoreHeader[4].getText() + "</h1></center>", "Game Over", JOptionPane.PLAIN_MESSAGE);
-
 	}
+
+	private void checkForBot() {
+		if (!singlePlayer && currentPlayer == 1 && turnCount > 0) {
+			Bot.play();
+		}
+	}
+
+	public JFrame getFrame() {
+		return frame;
+	}
+
+	public ImageIcon[] getDieFaces() {
+		return dieFaces;
+	}
+
+	public ImageIcon[] getSDieFaces() {
+		return sDieFaces;
+	}
+
+	public ImageIcon getDieFace(int die) {
+		return dieFaces[die];
+	}
+
+	public ImageIcon getSDieFace(int die) {
+		return sDieFaces[die];
+	}
+
+	public JButton getRollButton() {
+		return rollButton;
+	}
+
+	public JToggleButton[] getDiceButtons() {
+		return dice;
+	}
+
+	public JToggleButton getDieButton(int btnNum) {
+		return dice[btnNum];
+	}
+
+	public JButton[] getUpperScoreButtons() {
+		return upperScoreButton;
+	}
+
+	public JButton[] getLowerScoreButtons() {
+		return lowerScoreButton;
+	}
+
+	public JButton getUpperScoreButton(int btnNum) {
+		return upperScoreButton[btnNum];
+	}
+
+	public JButton getLowerScoreButton(int btnNum) {
+		return lowerScoreButton[btnNum];
+	}
+
+	public int getCurrentPlayer() {
+		return currentPlayer;
+	}
+
+	public boolean[] getDiceList() {
+		return diceList;
+	}
+
+	public Player[] getPlayers() {
+		return player;
+	}
+
+	public Player getPlayer(int playerNum) {
+		return player[playerNum];
+	}
+
+	public int getRollCount() {
+		return rollCount;
+	}
+
+	public int getTurnCount() {
+		return turnCount;
+	}
+
 }
