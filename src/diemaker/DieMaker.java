@@ -20,7 +20,7 @@ import java.util.Random;
 /**
  * Creates an object used to simulate a single die.
  *
- * @version Alpha 2
+ * @version Alpha 3
  * @author PCGuyIV
  */
 public class DieMaker {

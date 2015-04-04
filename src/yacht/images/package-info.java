@@ -1,7 +1,7 @@
 /**
  * Contains images for Yacht.
  * <p>
- * @version Alpha 2
+ * @version Alpha 3
  * @author PCGuyIV
  * @copyright Copyright (C) 2014 - PCGuyIV
  * @license GNU General Public License, Version 3 (GPLv3)

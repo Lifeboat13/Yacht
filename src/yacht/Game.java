@@ -15,6 +15,8 @@
  */
 package yacht;
 
+import java.util.Arrays;
+
 import diemaker.Dice;
 
 public class Game {
@@ -43,7 +45,7 @@ public class Game {
 		pair = false;
 
 		threeOfAKind = fourOfAKind = fullHouse = yacht = false;
-		smStraight   = lgStraight  = true;
+		smStraight   = lgStraight  = false;
 
 		toakVal = foakVal = fhVal = ssVal = lsVal = yachtVal = 0;
 
@@ -98,35 +100,69 @@ public class Game {
 			smStraight = false;
 			ssVal      = 0;
 		} else {
-			int zeroCount = 0;
-			int pairCount = 0;
+			int[]     sortedDice = Arrays.copyOf(diceVals, DICE.getNumDice());
+			boolean[] hasVal     = new boolean[] {false, false, false, false, false, false};
 
-			for (int i = 0; i < DICE.getSides(); i++) {
-				if (valCount[i] == 0) {
-					zeroCount++;
+			Arrays.sort(sortedDice);
 
-					if (i > 0 && i < DICE.getSides() - 1) {
-						lgStraight = false;
-
-						if (i > 1 && i < DICE.getSides() - 2) {
-							smStraight = false;
-						}
-					}
-				} else if (valCount[i] == 2) {
-					pairCount++;
+			for (int i = 0; i < DICE.getNumDice(); i++) {
+				System.out.print(sortedDice[i]);
+				System.out.print(": ");
+				switch (sortedDice[i]) {
+					case 1:
+						hasVal[0] = true;
+						break;
+					case 2:
+						hasVal[1] = true;
+						break;
+					case 3:
+						hasVal[2] = true;
+						break;
+					case 4:
+						hasVal[3] = true;
+						break;
+					case 5:
+						hasVal[4] = true;
+						break;
+					case 6:
+						hasVal[5] = true;
+						break;
+					default:
+						break;
 				}
+
 			}
 
-			if (zeroCount > 1 || pairCount > 0 || !lgStraight) {
-				lsVal = 0;
-			} else {
-				lsVal = Score.getLgStraightValue();
+			for (int i = 0; i < 6; i++) {
+				System.out.println(hasVal[i]);
 			}
 
-			if (zeroCount > 2 || pairCount > 1 || !smStraight) {
-				ssVal = 0;
+			if (hasVal[1] && hasVal[2] && hasVal[3] && hasVal[4]) {
+				if (hasVal[0] || hasVal[5]) {
+					lgStraight = true;
+					lsVal      = Score.getLgStraightValue();
+				} else {
+					lgStraight = false;
+					lsVal      = 0;
+				}
+
+				smStraight = true;
+				ssVal      = Score.getSmStraightValue();
 			} else {
-				ssVal = Score.getSmStraightValue();
+				lgStraight = false;
+				lsVal      = 0;
+				if (hasVal[2] && hasVal[3]) {
+					if ((hasVal[0] && hasVal[1]) ||
+						(hasVal[1] && hasVal[4]) ||
+						(hasVal[4] && hasVal[5])) {
+						smStraight = true;
+						ssVal      = Score.getSmStraightValue();
+					} else {
+						smStraight = false;
+						ssVal      = 0;
+					}
+				}
+
 			}
 		}
 	}

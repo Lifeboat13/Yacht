@@ -18,7 +18,7 @@ package diemaker;
 /**
  * Creates random number generators that will mimic a set of dice.
  *
- * @version Alpha 2
+ * @version Alpha 3
  * @author  PCGuyIV
  */
 public class Dice {

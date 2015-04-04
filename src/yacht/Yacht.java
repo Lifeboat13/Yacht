@@ -35,7 +35,7 @@ import javax.swing.border.LineBorder;
  * <p>
  * Creates the main game window.
  * <p>
- * @version Alpha 2
+ * @version Alpha 3
  * @author PCGuyIV
  * @copyright Copyright (C) 2014 - PCGuyIV
  * @license GNU General Public License, Version 3 (GPLv3)
@@ -818,7 +818,6 @@ public class Yacht {
 			showGameResults();
 		} else {
 			resetRollButton();
-			Bot.repaintButtons();
 			checkForBot();
 		}
 

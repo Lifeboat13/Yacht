@@ -38,11 +38,12 @@ public class Bot {
 		scored = false;
 		cp     = Yacht.window.getCurrentPlayer();
 
+		System.out.println("Turn #" + Integer.toString(14 - Yacht.window.getTurnCount()));
+		System.out.println("Pre Bot Roll: " + Game.DICE.toString());
+
 		do {
-			repaintButtons();
-			pause();
 			Yacht.window.getRollButton().doClick(250);
-			pause();
+			System.out.println("Bot Roll #" + Integer.toString(3 - Yacht.window.getRollCount()) + ": " + Game.DICE.toString());
 
 			single = lowPair = highPair = toak = foak = yacht = 0;
 			needsSingleVal = needsLowPairVal = needsHighPairVal = false;
@@ -468,11 +469,7 @@ public class Bot {
 					}
 				}
 			}
-
-			repaintButtons();
 		} while (Yacht.window.getRollCount() > 0 && !scored);
-
-		repaintButtons();
 	}
 
 	public static void pause() {
@@ -493,17 +490,9 @@ public class Bot {
 	}
 
 	private static void selectDice(String currHand) {
-		repaintButtons();
-
 		for (int i = 0; i < Game.DICE.getNumDice(); i++) {
-			if (dice[i].isSelected()) {
-				dice[i].doClick();
-			}
-
-			dice[i].setIcon(Yacht.window.getDieFace(Game.DICE.getResult(i)));
+			dice[i].setSelected(false);
 		}
-
-		repaintButtons();
 
 		switch (currHand) {
 			case "smStraight":
@@ -519,65 +508,53 @@ public class Bot {
 						case 1:
 							if (diceVals[0] == 1 && !ace) {
 								ace = true;
-								if (!dice[i].isSelected()) {
-									dice[i].setIcon(Yacht.window.getSDieFace(Game.DICE.getResult(i)));
-									dice[i].doClick(250);
-									pause();
-								}
+								dice[i].setSelected(true);
+							} else {
+								dice[i].setSelected(false);
 							}
 
 							break;
 						case 2:
 							if (diceVals[0] <= 2 && !two) {
 								two = true;
-								if (!dice[i].isSelected()) {
-									dice[i].setIcon(Yacht.window.getSDieFace(Game.DICE.getResult(i)));
-									dice[i].doClick(250);
-									pause();
-								}
+								dice[i].setSelected(true);
+							} else {
+								dice[i].setSelected(false);
 							}
 
 							break;
 						case 3:
 							if (!three) {
 								three = true;
-								if (!dice[i].isSelected()) {
-									dice[i].setIcon(Yacht.window.getSDieFace(Game.DICE.getResult(i)));
-									dice[i].doClick(250);
-									pause();
-								}
+								dice[i].setSelected(true);
+							} else {
+								dice[i].setSelected(false);
 							}
 
 							break;
 						case 4:
 							if (!four) {
 								four = true;
-								if (!dice[i].isSelected()) {
-									dice[i].setIcon(Yacht.window.getSDieFace(Game.DICE.getResult(i)));
-									dice[i].doClick(250);
-									pause();
-								}
+								dice[i].setSelected(true);
+							} else {
+								dice[i].setSelected(false);
 							}
 
 							break;
 						case 5:
 							if (diceVals[4] >= 5 && !five) {
 								five = true;
-								if (!dice[i].isSelected()) {
-									dice[i].setIcon(Yacht.window.getSDieFace(Game.DICE.getResult(i)));
-									dice[i].doClick(250);
-									pause();
-								}
+								dice[i].setSelected(true);
+							} else {
+								dice[i].setSelected(false);
 							}
 							break;
 						case 6:
 							if (diceVals[4] == 6 && !six) {
 								six = true;
-								if (!dice[i].isSelected()) {
-									dice[i].setIcon(Yacht.window.getSDieFace(Game.DICE.getResult(i)));
-									dice[i].doClick(250);
-									pause();
-								}
+								dice[i].setSelected(true);
+							} else {
+								dice[i].setSelected(false);
 							}
 							break;
 						default:
@@ -595,37 +572,43 @@ public class Bot {
 
 				switch (currHand) {
 					case "threeOfAKind":
+						System.out.println("Selecting 3 of a Kind...");
 						val = toak;
 						break;
 					case "fourOfAKind":
+						System.out.println("Selecting 4 of a Kind...");
 						val = foak;
 						break;
 					case "highPair":
+						System.out.println("Selecting High Pair...");
 						val = highPair;
 						break;
 					case "lowPair":
+						System.out.println("Selecting Low Pair...");
 						val = lowPair;
 						break;
 					default:
+						System.out.println("Selecting Pair...");
 						val = pair;
 						break;
 				}
 
 				for (int i = 0; i < Game.DICE.getNumDice(); i++) {
-					if (Game.DICE.getResult(i) == val && !dice[i].isSelected()) {
-						dice[i].setIcon(Yacht.window.getSDieFace(Game.DICE.getResult(i)));
-						dice[i].doClick(250);
-						pause();
+					if (Game.DICE.getResult(i) == val) {
+						dice[i].setSelected(true);
+					} else {
+						dice[i].setSelected(false);
 					}
 				}
 
 				break;
 			case "twoPair":
+				System.out.println("Selecting Two Pair...");
 				for (int i = 0; i < Game.DICE.getNumDice(); i++) {
-					if ((Game.DICE.getResult(i) == highPair || Game.DICE.getResult(i) == lowPair) && !dice[i].isSelected()) {
-						dice[i].setIcon(Yacht.window.getSDieFace(Game.DICE.getResult(i)));
-						dice[i].doClick(250);
-						pause();
+					if ((Game.DICE.getResult(i) == highPair || Game.DICE.getResult(i) == lowPair)) {
+						dice[i].setSelected(true);
+					} else {
+						dice[i].setSelected(false);
 					}
 				}
 
@@ -645,27 +628,23 @@ public class Bot {
 				}
 
 				if (needsSingleVal) {
+					System.out.println("Selecting " + Integer.toString(single) + "'s...");
 					for (int i = 0; i < Game.DICE.getNumDice(); i++) {
-						if (Game.DICE.getResult(i) == single && !dice[i].isSelected()) {
-							dice[i].setIcon(Yacht.window.getSDieFace(Game.DICE.getResult(i)));
-							dice[i].doClick(250);
-							pause();
+						if (Game.DICE.getResult(i) == single) {
+							dice[i].setSelected(true);
+						} else {
+							dice[i].setSelected(false);
 						}
 					}
 				} else {
+					System.out.println("Rolling all dice...");
 					for (int i = 0; i < Game.DICE.getNumDice(); i++) {
-						if (dice[i].isSelected()) {
-							dice[i].setIcon(Yacht.window.getDieFace(Game.DICE.getResult(i)));
-							dice[i].doClick(250);
-							pause();
-						}
+						dice[i].setSelected(false);
 					}
 				}
 
 				break;
 		}
-
-		repaintButtons();
 	}
 
 	private static boolean needsVal(int val) {
@@ -740,8 +719,6 @@ public class Bot {
 			default:
 				break;
 		}
-
-		repaintButtons();
 	}
 
 	private static void zeroScore() {
@@ -785,23 +762,6 @@ public class Bot {
 			upperBtn[1].doClick(250);
 			pause();
 		}
-
-		repaintButtons();
 	}
 
-	public static void repaintButtons() {
-		Yacht.window.getFrame().repaint();
-
-		for (int i = 0; i < lowerBtn.length; i++) {
-			if (i < upperBtn.length) {
-				upperBtn[i].repaint();
-			}
-
-			if (i < dice.length) {
-				dice[i].repaint();
-			}
-
-			lowerBtn[i].repaint();
-		}
-	}
 }
