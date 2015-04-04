@@ -39,9 +39,10 @@ public class Game {
 	private static int chanceVal;
 
 	private static int[] valCount = new int[DICE.getSides()];
-	private static int[] diceVals = DICE.getResults();
+	private static int[] diceVals = Arrays.copyOf(DICE.getResults(), DICE.getNumDice());
 
 	public static void evaluateRoll() {
+		diceVals = Arrays.copyOf(DICE.getResults(), DICE.getNumDice());
 		pair = false;
 
 		threeOfAKind = fourOfAKind = fullHouse = yacht = false;
