@@ -650,41 +650,23 @@ public class Bot {
 	private static boolean needsVal(int val) {
 		switch (val) {
 			case 1:
-				if (player[cp].getScore().getAces() < 0) {
-					return true;
-				} else {
-					return false;
-				}
+				return player[cp].getScore().getAces() < 0;
+				
 			case 2:
-				if (player[cp].getScore().getTwos() < 0) {
-					return true;
-				} else {
-					return false;
-				}
+				return player[cp].getScore().getTwos() < 0;
+				
 			case 3:
-				if (player[cp].getScore().getThrees() < 0) {
-					return true;
-				} else {
-					return false;
-				}
+				return player[cp].getScore().getThrees() < 0;
+				
 			case 4:
-				if (player[cp].getScore().getFours() < 0) {
-					return true;
-				} else {
-					return false;
-				}
+				return player[cp].getScore().getFours() < 0;
+				
 			case 5:
-				if (player[cp].getScore().getFives() < 0) {
-					return true;
-				} else {
-					return false;
-				}
+				return player[cp].getScore().getFives() < 0;
+				
 			case 6:
-				if (player[cp].getScore().getSixes() < 0) {
-					return true;
-				} else {
-					return false;
-				}
+				return player[cp].getScore().getSixes() < 0;
+				
 			default:
 				return false;
 		}
