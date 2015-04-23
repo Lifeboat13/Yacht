@@ -112,365 +112,402 @@ public class Bot {
 			}
 
 			if (Game.hasYacht()) {
-				if (player[cp].getScore().getYacht() < 0) {
-					scored = true;
-					lowerBtn[5].doClick(250);
-					pause();
-				} else if (needsYachtVal) {
-					scored = true;
-					pushUpperButton(yacht);
-				} else if (Game.DICE.getTotal() > 25) {
-					if (player[cp].getScore().getFourOfAKind() < 0) {
-						scored = true;
-						lowerBtn[1].doClick(250);
-						pause();
-					} else if (player[cp].getScore().getThreeOfAKind() < 0) {
-						scored = true;
-						lowerBtn[0].doClick(250);
-						pause();
-					} else if (player[cp].getScore().getChance() < 0) {
-						scored = true;
-						lowerBtn[6].doClick(250);
-						pause();
-					} else if (player[cp].getScore().getFullHouse() < 0) {
-						scored = true;
-						lowerBtn[2].doClick(250);
-						pause();
-					} else if (Yacht.window.getRollCount() > 0) {
-						selectDice();
-					} else {
-						scored = true;
-						zeroScore();
-					}
-				} else if (Game.DICE.getTotal() == 25) {
-					if (player[cp].getScore().getFourOfAKind() < 0) {
-						scored = true;
-						lowerBtn[1].doClick(250);
-						pause();
-					} else if (player[cp].getScore().getFullHouse() < 0) {
-						scored = true;
-						lowerBtn[2].doClick(250);
-						pause();
-					} else if (player[cp].getScore().getThreeOfAKind() < 0) {
-						scored = true;
-						lowerBtn[0].doClick(250);
-						pause();
-					} else if (player[cp].getScore().getChance() < 0) {
-						scored = true;
-						lowerBtn[6].doClick(250);
-						pause();
-					} else if (Yacht.window.getRollCount() > 0) {
-						selectDice();
-					} else {
-						scored = true;
-						zeroScore();
-					}
-				} else {
-					if (player[cp].getScore().getFullHouse() < 0) {
-						scored = true;
-						lowerBtn[2].doClick(250);
-						pause();
-					} else if (player[cp].getScore().getFourOfAKind() < 0) {
-						scored = true;
-						lowerBtn[1].doClick(250);
-						pause();
-					} else if (player[cp].getScore().getThreeOfAKind() < 0) {
-						scored = true;
-						lowerBtn[0].doClick(250);
-						pause();
-					} else if (Yacht.window.getRollCount() > 0) {
-						selectDice();
-					} else if (player[cp].getScore().getChance() < 0) {
-						scored = true;
-						lowerBtn[6].doClick(250);
-						pause();
-					} else {
-						scored = true;
-						zeroScore();
-					}
-				}
+				doHasYacht();
 			} else if (Game.hasFourOfAKind()) {
-				if (Yacht.window.getRollCount() > 0) {
-					if (player[cp].getScore().getYacht()     < 0 || needsFOAKVal ||
-						player[cp].getScore().getFullHouse() < 0) {
-						selectDice("fourOfAKind");
-					} else if (player[cp].getScore().getFourOfAKind() < 0) {
-						if (single == 6) {
-							scored = true;
-							lowerBtn[1].doClick(250);
-							pause();
-						} else {
-							selectDice("fourOfAKind");
-						}
-					} else if (needsSingleVal) {
-						selectDice();
-					}
-				} else if (needsFOAKVal) {
-					scored = true;
-					pushUpperButton(foak);
-				} else if (player[cp].getScore().getFourOfAKind() < 0) {
-					scored = true;
-					lowerBtn[1].doClick(250);
-					pause();
-				} else if (player[cp].getScore().getThreeOfAKind() < 0) {
-					scored = true;
-					lowerBtn[0].doClick(250);
-					pause();
-				} else if (player[cp].getScore().getChance() < 0) {
-					scored = true;
-					lowerBtn[1].doClick(250);
-					pause();
-				} else if (needsSingleVal) {
-					scored = true;
-					pushUpperButton(single);
-				} else {
-					scored = true;
-					zeroScore();
-				}
+				doHasFourOfAKind();
 			} else if (Game.hasFullHouse()) {
-				needsPairVal = false;
-				pair         = 0;
-
-				if (toak > lowPair) {
-					pair = lowPair;
-				} else {
-					pair = highPair;
-				}
-
-				needsPairVal = needsVal(pair);
-
-				if (player[cp].getScore().getFullHouse() < 0) {
-					scored = true;
-					lowerBtn[2].doClick(250);
-					pause();
-				} else if (Yacht.window.getRollCount() > 0) {
-					if (player[cp].getScore().getYacht()       < 0 || needsTOAKVal ||
-						player[cp].getScore().getFourOfAKind() < 0) {
-						selectDice("threeOfAKind");
-					} else if (player[cp].getScore().getThreeOfAKind() < 0) {
-						if (pair == 6) {
-							scored = true;
-							lowerBtn[0].doClick(250);
-							pause();
-						} else {
-							selectDice("threeOfAKind");
-						}
-					} else if (needsPairVal) {
-						selectDice("pair");
-					} else {
-						selectDice();
-					}
-				} else if (needsTOAKVal) {
-					scored = true;
-					pushUpperButton(toak);
-				} else if (player[cp].getScore().getThreeOfAKind() < 0) {
-					scored = true;
-					lowerBtn[0].doClick(250);
-					pause();
-				} else if (player[cp].getScore().getChance() < 0) {
-					scored = true;
-					lowerBtn[6].doClick(250);
-					pause();
-				} else if (needsPairVal) {
-					scored = true;
-					pushUpperButton(pair);
-				} else {
-					scored = true;
-					zeroScore();
-				}
+				doHasFullHouse();
 			} else if (Game.hasThreeOfAKind()) {
-				int     lowSingle         = 0,     highSingle         = 0;
-				boolean needsLowSingleVal = false, needsHighSingleVal = false;
-
-				for (int i = 0; i < Game.DICE.getSides(); i++) {
-					if (Game.getValCount()[i] == 1) {
-						if (lowSingle == 0) {
-							lowSingle         = i + 1;
-							needsLowSingleVal = needsVal(lowSingle);
-						} else {
-							highSingle         = i + 1;
-							needsHighSingleVal = needsVal(highSingle);
-						}
-					}
-				}
-
-				if (Yacht.window.getRollCount() > 0) {
-					if (player[cp].getScore().getYacht()        < 0 || needsTOAKVal ||
-						player[cp].getScore().getFourOfAKind()  < 0 ||
-						player[cp].getScore().getFullHouse()    < 0 ||
-						player[cp].getScore().getThreeOfAKind() < 0) {
-						selectDice("threeOfAKind");
-					} else {
-						selectDice();
-					}
-				} else if (needsTOAKVal) {
-					scored = true;
-					pushUpperButton(toak);
-				} else if (player[cp].getScore().getThreeOfAKind() < 0) {
-					scored = true;
-					lowerBtn[0].doClick(250);
-					pause();
-				} else if (player[cp].getScore().getChance() < 0) {
-					scored = true;
-					lowerBtn[6].doClick(250);
-					pause();
-				} else if (needsLowSingleVal) {
-					scored = true;
-					pushUpperButton(lowSingle);
-				} else if (needsHighSingleVal) {
-					scored = true;
-					pushUpperButton(highSingle);
-				} else {
-					scored = true;
-					zeroScore();
-				}
+				doHasThreeOfKind();
 			} else if (Game.hasLgStraight()) {
-				if (player[cp].getScore().getLgStraight() < 0) {
-					scored = true;
-					lowerBtn[4].doClick(250);
-					pause();
-				} else if (player[cp].getScore().getSmStraight() < 0) {
-					scored = true;
-					lowerBtn[3].doClick(250);
-					pause();
-				} else if (Yacht.window.getRollCount() > 0) {
-					selectDice();
-				} else if (player[cp].getScore().getChance() < 0) {
-					scored = true;
-					lowerBtn[6].doClick(250);
-					pause();
-				} else {
-					for (int i = 0; i < Game.DICE.getNumDice(); i++) {
-						if (needsDiceVals[i]) {
-							scored = true;
-							pushUpperButton(diceVals[i]);
-							break;
-						}
-					}
-
-					if (!scored) {
-						scored = true;
-						zeroScore();
-					}
-				}
+				doHasLongStraight();
 			} else if (Game.hasSmStraight()) {
-				if (Yacht.window.getRollCount() > 0) {
-					if (player[cp].getScore().getLgStraight() < 0) {
-						selectDice("smStraight");
-					} else if (player[cp].getScore().getSmStraight() < 0) {
-						scored = true;
-						lowerBtn[3].doClick(250);
-						pause();
-					} else if (needsPairVal) {
-						selectDice("pair");
-					} else {
-						selectDice();
-					}
-				} else if (player[cp].getScore().getSmStraight() < 0) {
-					scored = true;
-					lowerBtn[3].doClick(250);
-					pause();
-				} else if (player[cp].getScore().getChance() < 0) {
-					scored = true;
-					lowerBtn[6].doClick(250);
-					pause();
-				} else if (needsPairVal) {
-					scored = true;
-					pushUpperButton(pair);
-				} else {
-					for (int i = 0; i < Game.DICE.getNumDice(); i++) {
-						if (needsDiceVals[i]) {
-							scored = true;
-							pushUpperButton(diceVals[i]);
-							break;
-						}
-					}
-
-					if (!scored) {
-						scored = true;
-						zeroScore();
-					}
-				}
+				doRasSmallStraight();
 			} else if (highPair > 0) {
-				if (Yacht.window.getRollCount() > 0) {
-					if (player[cp].getScore().getYacht()        < 0 || needsHighPairVal ||
-						player[cp].getScore().getFourOfAKind()  < 0 ||
-						player[cp].getScore().getThreeOfAKind() < 0) {
-						selectDice("highPair");
-					} else if (player[cp].getScore().getFullHouse() < 0) {
-						selectDice("twoPair");
-					} else if (needsLowPairVal) {
-						selectDice("lowPair");
-					} else {
-						selectDice();
-					}
-				} else if (player[cp].getScore().getChance() < 0) {
-					scored = true;
-					lowerBtn[6].doClick(250);
-				} else if (needsLowPairVal) {
-					scored = true;
-					pushUpperButton(lowPair);
-				} else if (needsHighPairVal) {
-					pushUpperButton(highPair);
-				} else if (needsSingleVal) {
-					scored = true;
-					pushUpperButton(single);
-				} else {
-					scored = true;
-					zeroScore();
-				}
+				doHasHighPair();
 			} else if (pair > 0) {
-				if (Yacht.window.getRollCount() > 0) {
-					if (player[cp].getScore().getYacht()        < 0 || needsPairVal ||
-						player[cp].getScore().getFourOfAKind()  < 0 ||
-						player[cp].getScore().getThreeOfAKind() < 0 ||
-						player[cp].getScore().getFullHouse()    < 0) {
-						selectDice("pair");
-					} else {
-						selectDice();
-					}
-				} else if (player[cp].getScore().getChance() < 0) {
-					scored = true;
-					lowerBtn[6].doClick(250);
-				} else if (needsPairVal) {
-					scored = true;
-					pushUpperButton(pair);
-				} else {
-					for (int i = 0; i < Game.DICE.getNumDice(); i++) {
-						if (needsDiceVals[i]) {
-							scored = true;
-							pushUpperButton(diceVals[i]);
-							break;
-						}
-					}
-
-					if (!scored) {
-						scored = true;
-						zeroScore();
-					}
-				}
+				doHasPair();
 			} else {
-				if (Yacht.window.getRollCount() > 0) {
-					selectDice();
-				} else if (player[cp].getScore().getChance() < 0) {
-					scored = true;
-					lowerBtn[6].doClick(250);
-				} else {
-					for (int i = 0; i < Game.DICE.getNumDice(); i++) {
-						if (needsDiceVals[i]) {
-							scored = true;
-							pushUpperButton(diceVals[i]);
-							break;
-						}
-					}
-
-					if (!scored) {
-						scored = true;
-						zeroScore();
-					}
-				}
+				doHasNoScore();
 			}
 		} while (Yacht.window.getRollCount() > 0 && !scored);
+	}
+
+	private static void doHasNoScore() {
+		if (Yacht.window.getRollCount() > 0) {
+			selectDice();
+		} else if (player[cp].getScore().getChance() < 0) {
+			scored = true;
+			lowerBtn[6].doClick(250);
+		} else {
+			for (int i = 0; i < Game.DICE.getNumDice(); i++) {
+				if (needsDiceVals[i]) {
+					scored = true;
+					pushUpperButton(diceVals[i]);
+					break;
+				}
+			}
+
+			if (!scored) {
+				scored = true;
+				zeroScore();
+			}
+		}
+	}
+
+	private static void doHasYacht() {
+		if (player[cp].getScore().getYacht() < 0) {
+			scored = true;
+			lowerBtn[5].doClick(250);
+			pause();
+		} else if (needsYachtVal) {
+			scored = true;
+			pushUpperButton(yacht);
+		} else if (Game.DICE.getTotal() > 25) {
+			if (player[cp].getScore().getFourOfAKind() < 0) {
+				scored = true;
+				lowerBtn[1].doClick(250);
+				pause();
+			} else if (player[cp].getScore().getThreeOfAKind() < 0) {
+				scored = true;
+				lowerBtn[0].doClick(250);
+				pause();
+			} else if (player[cp].getScore().getChance() < 0) {
+				scored = true;
+				lowerBtn[6].doClick(250);
+				pause();
+			} else if (player[cp].getScore().getFullHouse() < 0) {
+				scored = true;
+				lowerBtn[2].doClick(250);
+				pause();
+			} else if (Yacht.window.getRollCount() > 0) {
+				selectDice();
+			} else {
+				scored = true;
+				zeroScore();
+			}
+		} else if (Game.DICE.getTotal() == 25) {
+			if (player[cp].getScore().getFourOfAKind() < 0) {
+				scored = true;
+				lowerBtn[1].doClick(250);
+				pause();
+			} else if (player[cp].getScore().getFullHouse() < 0) {
+				scored = true;
+				lowerBtn[2].doClick(250);
+				pause();
+			} else if (player[cp].getScore().getThreeOfAKind() < 0) {
+				scored = true;
+				lowerBtn[0].doClick(250);
+				pause();
+			} else if (player[cp].getScore().getChance() < 0) {
+				scored = true;
+				lowerBtn[6].doClick(250);
+				pause();
+			} else if (Yacht.window.getRollCount() > 0) {
+				selectDice();
+			} else {
+				scored = true;
+				zeroScore();
+			}
+		} else {
+			if (player[cp].getScore().getFullHouse() < 0) {
+				scored = true;
+				lowerBtn[2].doClick(250);
+				pause();
+			} else if (player[cp].getScore().getFourOfAKind() < 0) {
+				scored = true;
+				lowerBtn[1].doClick(250);
+				pause();
+			} else if (player[cp].getScore().getThreeOfAKind() < 0) {
+				scored = true;
+				lowerBtn[0].doClick(250);
+				pause();
+			} else if (Yacht.window.getRollCount() > 0) {
+				selectDice();
+			} else if (player[cp].getScore().getChance() < 0) {
+				scored = true;
+				lowerBtn[6].doClick(250);
+				pause();
+			} else {
+				scored = true;
+				zeroScore();
+			}
+		}
+	}
+
+	private static void doHasPair() {
+		if (Yacht.window.getRollCount() > 0) {
+			if (player[cp].getScore().getYacht()        < 0 || needsPairVal ||
+				player[cp].getScore().getFourOfAKind()  < 0 ||
+				player[cp].getScore().getThreeOfAKind() < 0 ||
+				player[cp].getScore().getFullHouse()    < 0) {
+				selectDice("pair");
+			} else {
+				selectDice();
+			}
+		} else if (player[cp].getScore().getChance() < 0) {
+			scored = true;
+			lowerBtn[6].doClick(250);
+		} else if (needsPairVal) {
+			scored = true;
+			pushUpperButton(pair);
+		} else {
+			for (int i = 0; i < Game.DICE.getNumDice(); i++) {
+				if (needsDiceVals[i]) {
+					scored = true;
+					pushUpperButton(diceVals[i]);
+					break;
+				}
+			}
+
+			if (!scored) {
+				scored = true;
+				zeroScore();
+			}
+		}
+	}
+
+	private static void doHasHighPair() {
+		if (Yacht.window.getRollCount() > 0) {
+			if (player[cp].getScore().getYacht()        < 0 || needsHighPairVal ||
+				player[cp].getScore().getFourOfAKind()  < 0 ||
+				player[cp].getScore().getThreeOfAKind() < 0) {
+				selectDice("highPair");
+			} else if (player[cp].getScore().getFullHouse() < 0) {
+				selectDice("twoPair");
+			} else if (needsLowPairVal) {
+				selectDice("lowPair");
+			} else {
+				selectDice();
+			}
+		} else if (player[cp].getScore().getChance() < 0) {
+			scored = true;
+			lowerBtn[6].doClick(250);
+		} else if (needsLowPairVal) {
+			scored = true;
+			pushUpperButton(lowPair);
+		} else if (needsHighPairVal) {
+			pushUpperButton(highPair);
+		} else if (needsSingleVal) {
+			scored = true;
+			pushUpperButton(single);
+		} else {
+			scored = true;
+			zeroScore();
+		}
+	}
+
+	private static void doRasSmallStraight() {
+		if (Yacht.window.getRollCount() > 0) {
+			if (player[cp].getScore().getLgStraight() < 0) {
+				selectDice("smStraight");
+			} else if (player[cp].getScore().getSmStraight() < 0) {
+				scored = true;
+				lowerBtn[3].doClick(250);
+				pause();
+			} else if (needsPairVal) {
+				selectDice("pair");
+			} else {
+				selectDice();
+			}
+		} else if (player[cp].getScore().getSmStraight() < 0) {
+			scored = true;
+			lowerBtn[3].doClick(250);
+			pause();
+		} else if (player[cp].getScore().getChance() < 0) {
+			scored = true;
+			lowerBtn[6].doClick(250);
+			pause();
+		} else if (needsPairVal) {
+			scored = true;
+			pushUpperButton(pair);
+		} else {
+			for (int i = 0; i < Game.DICE.getNumDice(); i++) {
+				if (needsDiceVals[i]) {
+					scored = true;
+					pushUpperButton(diceVals[i]);
+					break;
+				}
+			}
+
+			if (!scored) {
+				scored = true;
+				zeroScore();
+			}
+		}
+	}
+
+	private static void doHasLongStraight() {
+		if (player[cp].getScore().getLgStraight() < 0) {
+			scored = true;
+			lowerBtn[4].doClick(250);
+			pause();
+		} else if (player[cp].getScore().getSmStraight() < 0) {
+			scored = true;
+			lowerBtn[3].doClick(250);
+			pause();
+		} else if (Yacht.window.getRollCount() > 0) {
+			selectDice();
+		} else if (player[cp].getScore().getChance() < 0) {
+			scored = true;
+			lowerBtn[6].doClick(250);
+			pause();
+		} else {
+			for (int i = 0; i < Game.DICE.getNumDice(); i++) {
+				if (needsDiceVals[i]) {
+					scored = true;
+					pushUpperButton(diceVals[i]);
+					break;
+				}
+			}
+
+			if (!scored) {
+				scored = true;
+				zeroScore();
+			}
+		}
+	}
+
+	private static void doHasThreeOfKind() {
+		int     lowSingle         = 0,     highSingle         = 0;
+		boolean needsLowSingleVal = false, needsHighSingleVal = false;
+
+		for (int i = 0; i < Game.DICE.getSides(); i++) {
+			if (Game.getValCount()[i] == 1) {
+				if (lowSingle == 0) {
+					lowSingle         = i + 1;
+					needsLowSingleVal = needsVal(lowSingle);
+				} else {
+					highSingle         = i + 1;
+					needsHighSingleVal = needsVal(highSingle);
+				}
+			}
+		}
+
+		if (Yacht.window.getRollCount() > 0) {
+			if (player[cp].getScore().getYacht()        < 0 || needsTOAKVal ||
+				player[cp].getScore().getFourOfAKind()  < 0 ||
+				player[cp].getScore().getFullHouse()    < 0 ||
+				player[cp].getScore().getThreeOfAKind() < 0) {
+				selectDice("threeOfAKind");
+			} else {
+				selectDice();
+			}
+		} else if (needsTOAKVal) {
+			scored = true;
+			pushUpperButton(toak);
+		} else if (player[cp].getScore().getThreeOfAKind() < 0) {
+			scored = true;
+			lowerBtn[0].doClick(250);
+			pause();
+		} else if (player[cp].getScore().getChance() < 0) {
+			scored = true;
+			lowerBtn[6].doClick(250);
+			pause();
+		} else if (needsLowSingleVal) {
+			scored = true;
+			pushUpperButton(lowSingle);
+		} else if (needsHighSingleVal) {
+			scored = true;
+			pushUpperButton(highSingle);
+		} else {
+			scored = true;
+			zeroScore();
+		}
+	}
+
+	private static void doHasFullHouse() {
+		needsPairVal = false;
+		pair         = 0;
+
+		if (toak > lowPair) {
+			pair = lowPair;
+		} else {
+			pair = highPair;
+		}
+
+		needsPairVal = needsVal(pair);
+
+		if (player[cp].getScore().getFullHouse() < 0) {
+			scored = true;
+			lowerBtn[2].doClick(250);
+			pause();
+		} else if (Yacht.window.getRollCount() > 0) {
+			if (player[cp].getScore().getYacht()       < 0 || needsTOAKVal ||
+				player[cp].getScore().getFourOfAKind() < 0) {
+				selectDice("threeOfAKind");
+			} else if (player[cp].getScore().getThreeOfAKind() < 0) {
+				if (pair == 6) {
+					scored = true;
+					lowerBtn[0].doClick(250);
+					pause();
+				} else {
+					selectDice("threeOfAKind");
+				}
+			} else if (needsPairVal) {
+				selectDice("pair");
+			} else {
+				selectDice();
+			}
+		} else if (needsTOAKVal) {
+			scored = true;
+			pushUpperButton(toak);
+		} else if (player[cp].getScore().getThreeOfAKind() < 0) {
+			scored = true;
+			lowerBtn[0].doClick(250);
+			pause();
+		} else if (player[cp].getScore().getChance() < 0) {
+			scored = true;
+			lowerBtn[6].doClick(250);
+			pause();
+		} else if (needsPairVal) {
+			scored = true;
+			pushUpperButton(pair);
+		} else {
+			scored = true;
+			zeroScore();
+		}
+	}
+
+	private static void doHasFourOfAKind() {
+		if (Yacht.window.getRollCount() > 0) {
+			if (player[cp].getScore().getYacht()     < 0 || needsFOAKVal ||
+				player[cp].getScore().getFullHouse() < 0) {
+				selectDice("fourOfAKind");
+			} else if (player[cp].getScore().getFourOfAKind() < 0) {
+				if (single == 6) {
+					scored = true;
+					lowerBtn[1].doClick(250);
+					pause();
+				} else {
+					selectDice("fourOfAKind");
+				}
+			} else if (needsSingleVal) {
+				selectDice();
+			}
+		} 
+		else if (needsFOAKVal) {
+			scored = true;
+			pushUpperButton(foak);
+		} else if (player[cp].getScore().getFourOfAKind() < 0) {
+			scored = true;
+			lowerBtn[1].doClick(250);
+			pause();
+		} else if (player[cp].getScore().getThreeOfAKind() < 0) {
+			scored = true;
+			lowerBtn[0].doClick(250);
+			pause();
+		} else if (player[cp].getScore().getChance() < 0) {
+			scored = true;
+			lowerBtn[1].doClick(250);
+			pause();
+		} else if (needsSingleVal) {
+			scored = true;
+			pushUpperButton(single);
+		} else {
+			scored = true;
+			zeroScore();
+		}
 	}
 
 	public static void pause() {
