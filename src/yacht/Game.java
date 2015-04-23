@@ -13,11 +13,11 @@
  * You should have received a copy of the GNU General Public License along with
  * Yacht.  If not, see <http://www.gnu.org/licenses/>.
  */
-package yacht;
+package src.yacht;
 
 import java.util.Arrays;
 
-import diemaker.Dice;
+import src.diemaker.Dice;
 
 public class Game {
 

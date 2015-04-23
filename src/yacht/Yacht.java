@@ -1,4 +1,4 @@
-package yacht;
+package src.yacht;
 
 import java.awt.Color;
 import java.awt.EventQueue;

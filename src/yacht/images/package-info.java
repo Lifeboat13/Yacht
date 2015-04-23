@@ -20,4 +20,4 @@
  * You should have received a copy of the GNU General Public License along with
  * Yacht.  If not, see {@link http://www.gnu.org/licenses/}.
  */
-package yacht.images;
+package src.yacht.images;

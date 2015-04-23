@@ -13,7 +13,7 @@
  * You should have received a copy of the GNU General Public License along with
  * Yacht.  If not, see <http://www.gnu.org/licenses/>.
  */
-package diemaker;
+package src.diemaker;
 
 /**
  * Creates random number generators that will mimic a set of dice.

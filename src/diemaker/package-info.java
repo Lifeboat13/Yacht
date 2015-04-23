@@ -28,4 +28,4 @@
  * <li>Notation of the source of this package (Such as the bulk of this header)
  * remains present in the package.</li></ul>
  */
-package diemaker;
+package src.diemaker;
