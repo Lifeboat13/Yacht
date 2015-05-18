@@ -13,13 +13,13 @@
  * You should have received a copy of the GNU General Public License along with
  * Yacht.  If not, see <http://www.gnu.org/licenses/>.
  */
-package src.yacht;
+package yacht;
 
 import java.util.Arrays;
 
 import javax.swing.JButton;
 import javax.swing.JToggleButton;
-import src.diemaker.*;
+import diemaker.*;
 
 public class Bot {
 

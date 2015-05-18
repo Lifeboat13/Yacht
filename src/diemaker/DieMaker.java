@@ -13,7 +13,7 @@
  * You should have received a copy of the GNU General Public License along with
  * Yacht.  If not, see <http://www.gnu.org/licenses/>.
  */
-package src.diemaker;
+package diemaker;
 
 import java.util.Random;
 
